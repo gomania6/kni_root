@@ -9,10 +9,10 @@
 const KNI_CONFIG = {
   // --- ZARZĄD KOŁA NAUKOWEGO ---
   zarzad: {
-    prezes: "Aleksandra Mazurek",
+    prezes: "Kinga Ręba",
     wiceprezes: "Tomasz Jarko",
-    sekretarz: "Kinga Ręba",
-    kadencja: "2025/2026"
+    sekretarz: "Jan Dachtera",
+    kadencja: "2026/2027"
   },
 
   // --- DANE KONTAKTOWE & SOCIAL MEDIA ---
