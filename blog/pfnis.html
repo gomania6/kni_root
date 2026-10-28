@@ -1,38 +1,96 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <title>Koło Naukowe Informatyków na Poznańskim Festiwalu Nauki i Sztuki</title>
-    <link rel="stylesheet" href="blog.css">
-    <link rel="icon" href="../static/favicon.png" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Koło Naukowe Informatyków na Poznańskim Festiwalu Nauki i Sztuki // KNI UPP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              bg: '#050713',
+              darker: '#02040a',
+              card: 'rgba(11, 17, 33, 0.75)',
+              border: 'rgba(0, 240, 255, 0.2)',
+              cyan: '#00f0ff',
+              purple: '#8b5cf6',
+              emerald: '#10b981'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'Courier New', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    ::selection { background: #00f0ff; color: #050713; }
+    .glass-panel {
+      background: rgba(10, 16, 32, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(0, 240, 255, 0.15);
+    }
+    article img, article video {
+      border-radius: 12px;
+      margin: 1.5rem auto;
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      max-width: 100%;
+    }
+    article p {
+      margin: 1.25rem 0;
+      line-height: 1.75;
+      color: #cbd5e1;
+    }
+    article strong {
+      color: #00f0ff;
+    }
+  </style>
 </head>
-<body>
-    <header>
-        <h1>Blog Koła Naukowego Informatyków UPP</h1>
-        <nav>
-            <a href="index.html">← Powrót do bloga</a>
-        </nav>
+<body class="bg-cyber-bg text-slate-200 font-sans min-h-screen flex flex-col justify-between">
+  <div>
+    <header class="glass-panel border-x-0 border-t-0 border-b border-cyan-500/20 px-4 py-3.5 sticky top-0 z-50">
+      <div class="max-w-5xl mx-auto flex items-center justify-between font-mono text-xs">
+        <a href="index.html" class="text-cyan-400 hover:text-cyan-300 font-bold">&larr; POWRÓT_DO_LISTY_WPISÓW</a>
+        <a href="../index.html" class="text-slate-400 hover:text-white">PORTAL_GŁÓWNY</a>
+      </div>
     </header>
-    <main>
-        <article>
-            <h1>Koło Naukowe Informatyków na Poznańskim Festiwalu Nauki i Sztuki</h1>
-            <p>
-                W tym roku tematem przewodnim PFNIS była <strong>odpowiedzialność</strong>. Dla informatyka odpowiedzialność oznacza jedno: <strong>cyberbezpieczeństwo</strong>.
-            </p>
-            <p>
-                Właśnie dlatego przygotowaliśmy quiz sprawdzający, czy uczestnicy wydarzenia potrafią rozpoznać najpowszechniejsze przypadki oszustw internetowych. Quiz cieszył się dużym zainteresowaniem zarówno wśród młodszych, jak i starszych uczestników festiwalu.
-            </p>
-            <p>
-                Bazowaliśmy na raporcie Komisji Nadzoru Finansowego oraz materiałach dostarczonych lub przygotowanych przez członków naszego Koła. Dzięki temu mogliśmy pokazać realne przykłady zagrożeń, z jakimi każdy z nas może się spotkać w sieci.
-            </p>
-            <p>
-                Dziękujemy wszystkim, którzy odwiedzili nasze stoisko i spróbowali swoich sił w quizie! Mamy nadzieję, że zdobyta wiedza pomoże Wam bezpieczniej poruszać się po cyfrowym świecie.
-            </p>
-        </article>
+
+    <main class="max-w-3xl mx-auto px-4 py-16 w-full">
+      <article class="glass-panel p-6 sm:p-10 rounded-2xl">
+        <div class="text-xs font-mono text-cyan-400 mb-2">// METADANE: PFNIS 2025</div>
+        <h1 class="text-2xl sm:text-3xl font-black text-white mb-6">Koło Naukowe Informatyków na Poznańskim Festiwalu Nauki i Sztuki</h1>
+        <div class="text-slate-300">
+          
+<p>
+    W tym roku tematem przewodnim PFNIS była <strong>odpowiedzialność</strong>. Dla informatyka odpowiedzialność oznacza jedno: <strong>cyberbezpieczeństwo</strong>.
+</p>
+<p>
+    Właśnie dlatego przygotowaliśmy quiz sprawdzający, czy uczestnicy wydarzenia potrafią rozpoznać najpowszechniejsze przypadki oszustw internetowych. Quiz cieszył się dużym zainteresowaniem zarówno wśród młodszych, jak i starszych uczestników festiwalu.
+</p>
+<p>
+    Bazowaliśmy na raporcie Komisji Nadzoru Finansowego oraz materiałach dostarczonych lub przygotowanych przez członków naszego Koła. Dzięki temu mogliśmy pokazać realne przykłady zagrożeń, z jakimi każdy z nas może się spotkać w sieci.
+</p>
+<p>
+    Dziękujemy wszystkim, którzy odwiedzili nasze stoisko i spróbowali swoich sił w quizie! Mamy nadzieję, że zdobyta wiedza pomoże Wam bezpieczniej poruszać się po cyfrowym świecie.
+</p>
+
+        </div>
+      </article>
     </main>
-    <footer>
-        <p>&copy;2025 Koło Naukowe Informatyków - UPP | Wszelkie prawa zastrzeżone</p>
-    </footer>
-    <script src="../assets/js/script.js"></script>
+  </div>
+
+  <footer class="border-t border-cyan-500/20 bg-cyber-darker text-slate-500 font-mono text-xs py-8 px-4 text-center">
+    &copy; 2026 Koło Naukowe Informatyków — UPP | Wszelkie prawa zastrzeżone
+  </footer>
 </body>
 </html>

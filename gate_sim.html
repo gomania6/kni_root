@@ -1,49 +1,191 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Symulator bramek logicznych – KNI UPP</title>
-    <link rel="stylesheet" href="gate_sim.css">
-    <link rel="icon" href="static/favicon.png" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Symulator Bramek Logicznych // KNI UPP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              bg: '#050713',
+              darker: '#02040a',
+              card: 'rgba(11, 17, 33, 0.75)',
+              border: 'rgba(0, 240, 255, 0.2)',
+              cyan: '#00f0ff',
+              purple: '#8b5cf6',
+              emerald: '#10b981'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'Courier New', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    ::selection { background: #00f0ff; color: #050713; }
+    .text-glow { text-shadow: 0 0 12px rgba(0, 240, 255, 0.6); }
+    .glass-panel {
+      background: rgba(10, 16, 32, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+    }
+    .toolbar button {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: #0f172a;
+      color: #94a3b8;
+      border: 1px solid #334155;
+      padding: 0.5rem 0.9rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .toolbar button:hover {
+      border-color: #00f0ff;
+      color: #fff;
+    }
+    .toolbar button.active {
+      background: #00f0ff;
+      color: #02040a;
+      border-color: #00f0ff;
+      box-shadow: 0 0 15px rgba(0,240,255,0.4);
+    }
+    #board {
+      display: block;
+      background: #03060f;
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 240, 255, 0.1);
+      width: 100%;
+      height: 72vh;
+      min-height: 480px;
+    }
+  </style>
 </head>
-<body>
-    <header>
-        <h1>Symulator bramek logicznych</h1>
-        <nav>
-            <a href="index.html">Strona główna</a> |
-            <a href="about.html">O nas</a> |
-            <a href="blog/index.html">Blog</a> |
-            <a href="contact.html">Kontakt</a>
+<body class="bg-cyber-bg text-slate-200 font-sans min-h-screen relative overflow-x-hidden selection:bg-cyan-400 selection:text-black flex flex-col justify-between">
+
+  <div class="relative z-20 flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 glass-panel border-x-0 border-t-0 border-b border-cyan-500/20 px-3 sm:px-6 lg:px-8 py-3">
+      <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
+        <a href="index.html" class="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0">
+          <div class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-slate-900 border border-cyan-400/50 flex items-center justify-center p-1.5 shadow-[0_0_15px_rgba(0,240,255,0.3)] group-hover:border-cyan-300 transition-colors">
+            <svg class="w-full h-full text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2" />
+              <polyline points="2 17 12 22 22 17" />
+              <polyline points="2 12 12 17 22 12" />
+            </svg>
+            <div class="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-purple-500 rounded-full animate-pulse"></div>
+          </div>
+          <div>
+            <span class="font-extrabold text-base sm:text-lg tracking-wider text-white flex items-center gap-1.5">
+              KNI <span class="text-cyan-400 text-glow">UPP</span>
+            </span>
+            <span class="block text-[9px] sm:text-[10px] font-mono tracking-widest text-slate-400 uppercase -mt-0.5">
+              Koło Naukowe
+            </span>
+          </div>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-1 font-mono text-xs lg:text-sm">
+          <a href="index.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">01. GŁÓWNA</a>
+          <a href="about.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">02. O_NAS</a>
+          <a href="gate_sim.html" class="px-3.5 py-1.5 rounded-md text-cyan-400 bg-cyan-950/40 border border-cyan-500/30">03. SYMULATOR</a>
+          <a href="tts.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">04. TTS_LAB</a>
+          <a href="blog/index.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">05. BLOG</a>
+          <a href="contact.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">06. KONTAKT</a>
         </nav>
+
+        <!-- Right Side CTA + Mobile Hamburger -->
+        <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <a href="contact.html" class="relative group overflow-hidden rounded-md p-px font-mono text-xs font-semibold whitespace-nowrap flex-shrink-0">
+            <span class="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-cyan-500 animate-pulse"></span>
+            <span class="relative block px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-[5px] bg-slate-950 transition-all duration-300 group-hover:bg-opacity-0 text-white text-[11px] sm:text-xs">
+              <span class="sm:hidden">[ DOŁĄCZ ]</span>
+              <span class="hidden sm:inline">[ DOŁĄCZ_DO_NAS ]</span>
+            </span>
+          </a>
+
+          <!-- Hamburger Button with Animated Bars -->
+          <button id="mobileMenuBtn" aria-label="Przełącz menu" class="md:hidden text-slate-300 hover:text-cyan-400 p-2 rounded-lg bg-slate-900/60 border border-cyan-500/30 focus:outline-none transition-colors">
+            <svg id="hamburgerIcon" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+            <svg id="closeIcon" class="w-5 h-5 hidden transition-transform duration-300 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Animated Semi-Transparent Mobile Nav Menu -->
+      <div id="mobileNav" class="md:hidden transition-all duration-300 ease-in-out max-h-0 opacity-0 overflow-hidden">
+        <div class="pt-3 pb-2 mt-3 font-mono text-xs sm:text-sm space-y-1.5 border-t border-cyan-500/20 bg-cyber-darker/90 backdrop-blur-xl p-3 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] border border-cyan-500/25">
+          <a href="index.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">01. GŁÓWNA</a>
+        <a href="about.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">02. O_NAS</a>
+        <a href="gate_sim.html" class="block px-3.5 py-2.5 rounded-lg text-cyan-300 bg-cyan-950/60 border border-cyan-500/40 font-semibold">03. SYMULATOR</a>
+        <a href="tts.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">04. TTS_LAB</a>
+        <a href="blog/index.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">05. BLOG</a>
+        <a href="contact.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">06. KONTAKT</a>
+        </div>
+      </div>
     </header>
-    <main>
-    <div class="toolbar">
-        <div class="toolbar-group">
+
+    <main class="max-w-7xl mx-auto px-4 py-8 w-full flex-1">
+      <div class="toolbar glass-panel p-4 rounded-xl flex flex-wrap items-center justify-between gap-4 mb-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <div class="toolbar-group flex gap-1.5">
             <button data-gate="INPUT">INPUT</button>
             <button data-gate="OUTPUT">OUTPUT</button>
-        </div>
-        <div class="toolbar-group">
+          </div>
+          <div class="w-px h-6 bg-slate-700 mx-1"></div>
+          <div class="toolbar-group flex flex-wrap gap-1.5">
             <button data-gate="NOT">NOT</button>
-            <button data-gate="AND">AND</button>
+            <button data-gate="AND" class="active">AND</button>
             <button data-gate="OR">OR</button>
             <button data-gate="EXOR">EXOR</button>
             <button data-gate="NAND">NAND</button>
             <button data-gate="NOR">NOR</button>
             <button data-gate="EXNOR">EXNOR</button>
+          </div>
         </div>
-        <div class="toolbar-group">
-            <button id="save-btn">Zapisz</button>
-            <button id="load-btn">Wczytaj</button>
-            <input type="file" id="file-input" style="display:none" accept=".json">
+
+        <div class="toolbar-group flex gap-2">
+          <button id="save-btn" class="border-cyan-500/40 text-cyan-300">Zapisz JSON</button>
+          <button id="load-btn" class="border-purple-500/40 text-purple-300">Wczytaj JSON</button>
+          <input type="file" id="file-input" style="display:none" accept=".json">
         </div>
-        <span class="toolbar-info">Kliknij bramkę, potem kliknij na tablicy, aby ją dodać.</span>
-    </div>
-        <canvas id="board"></canvas>
+
+        <div class="toolbar-info w-full text-center font-mono text-[11px] text-slate-400 pt-2 border-t border-slate-800">
+          💡 Wybierz bramkę w menu, a następnie <span class="text-cyan-400">kliknij dwukrotnie (double-click)</span> na planszy, aby ją wstawić. Przeciągaj porty, by łączyć przewody. Klawisz <span class="text-purple-400">Delete</span> usuwa zaznaczone bramki.
+        </div>
+      </div>
+
+      <canvas id="board"></canvas>
     </main>
-    <footer>
-        <p>&copy;2025 Koło Naukowe Informatyków - UPP | Wszelkie prawa zastrzeżone</p>
+
+    <!-- Footer -->
+    <footer class="border-t border-cyan-500/20 bg-cyber-darker text-slate-500 font-mono text-xs py-6 px-4 text-center">
+      &copy; 2026 Koło Naukowe Informatyków — UPP | Wszelkie prawa zastrzeżone
     </footer>
-    <script src="gate_sim.js"></script>
+  </div>
+
+  <script src="gate_sim.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/script.js"></script>
 </body>
 </html>

@@ -1,63 +1,81 @@
-/* blog/blog.css */
+/* blog.css - Cyberpunk Blog Styling */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Orbitron:wght@500;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
 
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.7;
+    background: #050811;
+    color: #f1f5f9;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
-    color: #333;
-    font-size: 1.15em; /* zwiększony rozmiar tekstu */
+    line-height: 1.8;
 }
 
 header {
-    background-color: #20232a;
-    color: white;
-    padding: 1em 2em;
+    background: rgba(5, 8, 17, 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+    padding: 1.5rem 2rem;
     text-align: center;
 }
 
 header h1 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00f2ff;
+    font-size: 1.6rem;
     margin: 0;
-    font-size: 2em;
+    letter-spacing: 0.05em;
 }
 
 nav {
-    margin-top: 1em;
+    margin-top: 0.75rem;
 }
 
 nav a {
-    color: #61dafb;
+    color: #94a3b8;
     text-decoration: none;
-    font-weight: bold;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    transition: color 0.2s ease;
 }
 
-a.active {
-    color: #fcff5d;;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 1em 0 0 0;
-    display: flex;
-    justify-content: center;
-    gap: 2em;
+nav a:hover {
+    color: #00f2ff;
 }
 
 main {
-    max-width: 1000px;
-    margin: 2em auto;
-    padding: 2em;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-    font-size: 1.15em; /* większy tekst w main */
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2.5rem;
+    background: rgba(13, 20, 36, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.6);
 }
 
-h2 {
-    margin-top: 0;
-    color: #20232a;
+article h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff, #00f2ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+article p em {
+    color: #00f2ff;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+}
+
+article p {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    margin: 1.25rem 0;
+}
+
+article strong {
+    color: #fff;
 }
 
 .blog-list {
@@ -66,64 +84,27 @@ h2 {
 }
 
 .blog-list li {
-    margin-bottom: 1.2em;
-    padding: 0.8em;
-    border-bottom: 1px solid #ddd;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .blog-list a {
-    font-size: 1.1em;
-    color: #20232a;
-    font-weight: bold;
+    color: #f1f5f9;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.15rem;
     text-decoration: none;
+    transition: all 0.2s ease;
 }
 
 .blog-list a:hover {
-    text-decoration: underline;
-}
-
-.date {
-    display: block;
-    color: #777;
-    font-size: 0.9em;
-    margin-top: 0.3em;
+    color: #00f2ff;
+    text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
 }
 
 footer {
     text-align: center;
-    padding: 1em;
-    background: #20232a;
-    color: white;
-    margin-top: 2em;
-}
-
-article h1 {
-    text-align: center;
-    font-size: 2.2em;
-}
-
-article img {
-    width: 100%;
-    max-width: 800px; /* większe zdjęcia */
-    border-radius: 12px;
-    margin-bottom: 1.5em;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-main {
-    flex: 1;
+    padding: 2rem;
+    color: #64748b;
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(0, 242, 255, 0.15);
 }

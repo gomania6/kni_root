@@ -1,161 +1,333 @@
-<!doctype html>
-<html lang="pl">
-
+<!DOCTYPE html>
+<html lang="pl" class="dark">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Koło Naukowe Informatyków UPP</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="icon" href="static/favicon.png" type="image/x-icon">
-    <meta name="theme-color" content="#0f1724">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KNI UPP // Koło Naukowe Informatyków</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              bg: '#050713',
+              darker: '#02040a',
+              card: 'rgba(11, 17, 33, 0.75)',
+              border: 'rgba(0, 240, 255, 0.2)',
+              cyan: '#00f0ff',
+              cyanGlow: 'rgba(0, 240, 255, 0.4)',
+              purple: '#8b5cf6',
+              purpleGlow: 'rgba(139, 92, 246, 0.4)',
+              emerald: '#10b981',
+              neonRed: '#ff0055'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'Courier New', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    ::selection { background: #00f0ff; color: #050713; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #050713; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00f0ff; }
+    .text-glow { text-shadow: 0 0 12px rgba(0, 240, 255, 0.6); }
+    .text-glow-purple { text-shadow: 0 0 12px rgba(139, 92, 246, 0.6); }
+    .glass-panel {
+      background: rgba(10, 16, 32, 0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(0, 240, 255, 0.15);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-panel:hover {
+      border-color: rgba(0, 240, 255, 0.45);
+      box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.2);
+    }
+    .scanline-overlay {
+      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.3));
+      background-size: 100% 4px;
+      pointer-events: none;
+    }
+    .cyber-grid {
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.05) 0%, transparent 60%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 40px 40px, 40px 40px;
+    }
+  </style>
 </head>
+<body class="bg-cyber-bg text-slate-200 font-sans min-h-screen relative overflow-x-hidden selection:bg-cyan-400 selection:text-black">
 
-<body>
-    <header>
-      <div class="container header-inner">
-        <a href="index.html" class="brand">
-          <img src="static/favicon.png" alt="KNI UPP" class="logo" />
-          Koło Naukowe Informatyków UPP
+  <canvas id="cyberCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
+  <div class="fixed inset-0 scanline-overlay z-10 pointer-events-none opacity-40"></div>
+
+  <div class="relative z-20 flex flex-col min-h-screen">
+    <!-- Top Telemetry Bar -->
+
+    <!-- Futuristic Navbar -->
+    <header class="sticky top-0 z-50 glass-panel border-x-0 border-t-0 border-b border-cyan-500/20 px-3 sm:px-6 lg:px-8 py-3">
+      <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
+        <a href="index.html" class="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0">
+          <div class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-slate-900 border border-cyan-400/50 flex items-center justify-center p-1.5 shadow-[0_0_15px_rgba(0,240,255,0.3)] group-hover:border-cyan-300 transition-colors">
+            <svg class="w-full h-full text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2" />
+              <polyline points="2 17 12 22 22 17" />
+              <polyline points="2 12 12 17 22 12" />
+            </svg>
+            <div class="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-purple-500 rounded-full animate-pulse"></div>
+          </div>
+          <div>
+            <span class="font-extrabold text-base sm:text-lg tracking-wider text-white flex items-center gap-1.5">
+              KNI <span class="text-cyan-400 text-glow">UPP</span>
+            </span>
+            <span class="block text-[9px] sm:text-[10px] font-mono tracking-widest text-slate-400 uppercase -mt-0.5">
+              Koło Naukowe
+            </span>
+          </div>
         </a>
 
-        <nav class="nav" aria-label="Główne menu">
-          <button class="nav-toggle" aria-label="Otwórz menu" aria-expanded="false">
-            <span class="hamburger" aria-hidden="true"></span>
-          </button>
-          <ul class="nav-list">
-            <li><a href="index.html" class="active">Strona główna</a></li>
-            <li><a href="about.html">O nas</a></li>
-            <li><a href="blog/index.html">Blog</a></li>
-            <li><a href="contact.html">Kontakt</a></li>
-          </ul>
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-1 font-mono text-xs lg:text-sm">
+          <a href="index.html" class="px-3.5 py-1.5 rounded-md text-cyan-400 bg-cyan-950/40 border border-cyan-500/30">01. GŁÓWNA</a>
+          <a href="about.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">02. O_NAS</a>
+          <a href="gate_sim.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">03. SYMULATOR</a>
+          <a href="tts.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">04. TTS_LAB</a>
+          <a href="blog/index.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">05. BLOG</a>
+          <a href="contact.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">06. KONTAKT</a>
         </nav>
+
+        <!-- Right Side CTA + Mobile Hamburger -->
+        <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <a href="contact.html" class="relative group overflow-hidden rounded-md p-px font-mono text-xs font-semibold whitespace-nowrap flex-shrink-0">
+            <span class="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-cyan-500 animate-pulse"></span>
+            <span class="relative block px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-[5px] bg-slate-950 transition-all duration-300 group-hover:bg-opacity-0 text-white text-[11px] sm:text-xs">
+              <span class="sm:hidden">[ DOŁĄCZ ]</span>
+              <span class="hidden sm:inline">[ DOŁĄCZ_DO_NAS ]</span>
+            </span>
+          </a>
+
+          <!-- Hamburger Button with Animated Bars -->
+          <button id="mobileMenuBtn" aria-label="Przełącz menu" class="md:hidden text-slate-300 hover:text-cyan-400 p-2 rounded-lg bg-slate-900/60 border border-cyan-500/30 focus:outline-none transition-colors">
+            <svg id="hamburgerIcon" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+            <svg id="closeIcon" class="w-5 h-5 hidden transition-transform duration-300 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Animated Semi-Transparent Mobile Nav Menu -->
+      <div id="mobileNav" class="md:hidden transition-all duration-300 ease-in-out max-h-0 opacity-0 overflow-hidden">
+        <div class="pt-3 pb-2 mt-3 font-mono text-xs sm:text-sm space-y-1.5 border-t border-cyan-500/20 bg-cyber-darker/90 backdrop-blur-xl p-3 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] border border-cyan-500/25">
+          <a href="index.html" class="block px-3.5 py-2.5 rounded-lg text-cyan-300 bg-cyan-950/60 border border-cyan-500/40 font-semibold">01. GŁÓWNA</a>
+        <a href="about.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">02. O_NAS</a>
+        <a href="gate_sim.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">03. SYMULATOR</a>
+        <a href="tts.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">04. TTS_LAB</a>
+        <a href="blog/index.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">05. BLOG</a>
+        <a href="contact.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">06. KONTAKT</a>
+        </div>
       </div>
     </header>
 
-    <main>
-        <!-- STARA SEKCJA DO STAREGO SLIDERA NIE USUWAĆ MOŻE SIĘ PRZYDAĆ -->
-        <!-- <section class="slider-section">
-                <div class="slider">
-                    <div class="slide active">
-                        <img src="assets/images/slider1.jpg" alt="Slajd 1" />
-                        <div class="caption">Warsztaty z Arduino</div>
-                    </div>
-                    <div class="slide">
-                        <img src="assets/images/slider2.jpg" alt="Slajd 2" />
-                        <div class="caption">Hackathon 2025</div>
-                    </div>
-                    <div class="slide">
-                        <img src="assets/images/slider3.jpg" alt="Slajd 3" />
-                        <div class="caption">Colonel Sanders</div>
-                    </div>
-                </div>
-                <div class="dots">
-                    <span class="dot active" data-index="0"></span>
-                    <span class="dot" data-index="1"></span>
-                    <span class="dot" data-index="2"></span>
-                </div>
-            </section> -->
+    <!-- Hero Section -->
+    <section class="relative pt-16 pb-20 md:pt-28 md:pb-32 px-4 cyber-grid border-b border-cyan-500/10">
+      <div class="max-w-6xl mx-auto text-center relative z-10">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-400/40 text-cyan-300 text-xs font-mono tracking-wider mb-8 shadow-[0_0_20px_rgba(0,240,255,0.15)]">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          <span data-kni="ogolne.sezon">SEZON AKADEMICKI 2025/2026</span> // HACKATHONY & PROJEKTY
+        </div>
 
-        <section
-            style="background: #fffbe7; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 2em; margin-bottom: 2em; display: flex; align-items: center; gap: 2em;">
-            <img src="assets/images/spotkanie_otwarte.png" alt="Otwarte spotkanie KNI UPP"
-                style="max-width: 220px; width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.10);" />
-            <div style="font-size: 1.15em;">
-                <p style="margin-top:0; margin-bottom:1em;">🎉 <strong>Hej, Studenci!</strong></p>
-                <p style="margin:0 0 1em 0;">
-                    Chcecie dowiedzieć się, czym zajmuje się Koło Naukowe Informatyków UPP i poznać ludzi z pasją do IT?
-                    🚀<br>
-                    Zapraszamy na otwarte spotkanie — idealna okazja, żeby do nas dołączyć! 💻
-                </p>
-                <ul style="list-style:none; padding:0; margin:0 0 1em 0;">
-                    <li>📅 <strong>20 października (poniedziałek)</strong></li>
-                    <li>🕕 <strong>18:30</strong></li>
-                    <li>📍 <strong>Katedra Inżynierii Biosystemów, ul. Wojska Polskiego 50, sala B4</strong></li>
-                </ul>
-                <p style="margin-bottom:0;">Do zobaczenia! 👋</p>
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white mb-6 leading-tight">
+          KODUJEMY <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-purple-500 text-glow">PRZYSZŁOŚĆ</span><br />
+          NA UNIWERSYTECIE PRZYRODNICZYM
+        </h1>
+
+        <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-400 font-normal mb-10 leading-relaxed">
+          Koło Naukowe Informatyków UPP to poligon doświadczalny dla pasjonatów programowania, systemów wbudowanych, elektroniki i cyberbezpieczeństwa. Przekształcamy teorię w działające prototypy.
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-4 font-mono text-sm">
+          <a href="gate_sim.html" class="px-7 py-3.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold transition-all shadow-[0_0_25px_rgba(0,240,255,0.4)] hover:shadow-[0_0_35px_rgba(0,240,255,0.6)] flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            URUCHOM_SYMULATOR
+          </a>
+          <a href="tts.html" class="px-7 py-3.5 rounded-lg glass-panel hover:bg-cyan-950/40 text-cyan-300 font-semibold border border-cyan-500/40 hover:border-cyan-400 transition-all flex items-center gap-2">
+            LAB_MOWY_TTS &rarr;
+          </a>
+          <a href="https://kniupp.pl/phishing_quiz/" target="_blank" rel="noopener" class="px-6 py-3.5 rounded-lg glass-panel hover:bg-purple-950/40 text-purple-300 font-semibold border border-purple-500/40 hover:border-purple-400 transition-all flex items-center gap-2">
+            QUIZ_CYBERSEC ↗
+          </a>
+        </div>
+
+        <!-- Telemetry Stats Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-16 font-mono">
+          <div class="glass-panel p-4 rounded-xl border-cyan-500/20">
+            <div class="text-2xl md:text-3xl font-extrabold text-cyan-400 text-glow">12+</div>
+            <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Projektów R&D</div>
+          </div>
+          <div class="glass-panel p-4 rounded-xl border-purple-500/20">
+            <div class="text-2xl md:text-3xl font-extrabold text-purple-400 text-glow-purple">100%</div>
+            <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Praktyki</div>
+          </div>
+          <div class="glass-panel p-4 rounded-xl border-emerald-500/20">
+            <div class="text-2xl md:text-3xl font-extrabold text-emerald-400">QL 2025</div>
+            <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Hackathon Award</div>
+          </div>
+          <div class="glass-panel p-4 rounded-xl border-sky-500/20">
+            <div class="text-2xl md:text-3xl font-extrabold text-sky-400">B4</div>
+            <div class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Baza Katedry UPP</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Open Meeting Spotlight Alert -->
+    <section class="max-w-6xl mx-auto px-4 -mt-8 relative z-30">
+      <div class="glass-panel p-6 sm:p-8 rounded-2xl border-cyan-400/40 shadow-[0_0_30px_rgba(0,240,255,0.15)] flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 rounded-xl bg-cyan-950/80 border border-cyan-400/50 flex-shrink-0 flex items-center justify-center text-cyan-400 text-xl shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+            &#9889;
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-mono uppercase bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 px-2 py-0.5 rounded">Spotkanie Otwarte</span>
+              <span class="text-xs font-mono text-purple-400 animate-pulse">&lt;REKRUTACJA&gt;</span>
             </div>
-        </section>
-
-        <section class="quiz_section">
-            <a class="quiz" href="https://kniupp.pl/phishing_quiz/" target="_blank" rel="noopener">QUIZ O<br> CYBERBEZPIECZEŃSTWIE</a>
-        </section>
-
-        <section>
-            <h2>Dołącz do nas!</h2>
-            <p>
-                Jeśli interesujesz się programowaniem, elektroniką, drukiem 3D lub chcesz poznać innych pasjonatów
-                technologii – zapraszamy!
+            <h3 class="text-xl font-bold text-white mt-1">Przyjdź i poznaj zespół KNI UPP</h3>
+            <p class="text-sm text-slate-300 mt-1">
+              Zapraszamy na najbliższe spotkanie organizacyjne: <strong class="text-cyan-300">Poniedziałek, godz. 18:30</strong>, <span data-kni="spotkanie.miejscePelne">Katedra Inżynierii Biosystemów, ul. Wojska Polskiego 50, sala B4</span>.
             </p>
-            <a href="contact.html" class="btn">Napisz do nas</a>
-        </section>
+          </div>
+        </div>
+        <a href="contact.html" class="flex-shrink-0 px-5 py-2.5 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-mono text-xs font-bold tracking-wider shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+          ZAREZERWUJ_MIEJSCE
+        </a>
+      </div>
+    </section>
 
-        <section class="tts-section" style="margin-top:2em; text-align:center; background:#f4f8ff; padding:1.25em; border-radius:8px;">
-            <h2>Text‑to‑Speech (TTS)</h2>
-            <p>Wpisz tekst w narzędziu TTS i wyślij go na backend, aby otrzymać plik dźwiękowy.</p>
-            <a href="tts.html" class="btn" style="display:inline-block; margin-top:0.5em;">Otwórz TTS</a>
-        </section>
+    <!-- Lab & Projects Showcase Cards -->
+    <section class="py-24 px-4 max-w-6xl mx-auto">
+      <div class="flex items-center gap-3 font-mono text-xs text-cyan-400 mb-2">
+        <span>01 // ECOSYSTEM</span>
+        <div class="h-px w-16 bg-cyan-500/30"></div>
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-10">
+        SYSTEMY I <span class="text-cyan-400 text-glow">APLIKACJE KOŁA</span>
+      </h2>
 
-        <section style="max-width:700px; margin:2em auto; background:#e7fff7; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.07); padding:2em; text-align:center;">
-            <h2>Symulator bramek logicznych</h2>
-            <p>Wypróbuj interaktywny symulator bramek logicznych (NOT, AND, OR, EXOR, NAND, NOR, EXNOR).</p>
-            <a href="gate_sim.html" class="btn" style="display:inline-block; margin-top:0.5em;">Otwórz symulator bramek</a>
-        </section>
-
-        <section>
-            <h2>Aktualności</h2>
-            <div id="latest-posts">
-                <!-- Tu można dynamicznie (JS) wczytać ostatnie wpisy z blog/index.html -->
-                <ul>
-                    <li>
-                        <a href="blog/pfnis.html">Koło Naukowe Informatyków na Poznańskim Festiwalu Nauki i Sztuki</a>
-                        <em></em>
-                    </li>
-                    <li>
-                        <a href="blog/juwenalia_2025.html">Pochód Juwenaliowy UPP</a>
-                        <em></em>
-                    </li>
-                    <li>
-                        <a href="blog/hackaton2025.html">Hackathon</a>
-                        <em></em>
-                    </li>
-                </ul>
-                <p><a href="blog/index.html">Zobacz wszystkie wpisy →</a></p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between group">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-cyan-950/70 border border-cyan-500/30 text-cyan-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
             </div>
-        </section>
-
-        <!-- Sekcje a projektami, uzupełnić później -->
-        <!-- <section>
-            <h2>Nasze Projekty</h2>
-            <ul>
-                <li>BRAK</li>
-                <li>BRAK</li>
-                <li>BRAK</li>
-            </ul>
-        </section> -->
-
-        <section>
-            <h2>Dołącz do nas!</h2>
-            <p>
-                Jeśli interesujesz się programowaniem, elektroniką, drukiem 3D lub chcesz poznać innych pasjonatów
-                technologii – zapraszamy!
+            <h3 class="text-xl font-bold text-white mb-2">Symulator Układów Logicznych</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+              Pełnowymiarowy edytor Canvas do projektowania sieci bramek logicznych (AND, OR, NOT, NAND, NOR, EXOR) z symulacją przepływu sygnału, zapisem i odczytem schematów do pliku JSON.
             </p>
-            <a href="contact.html" class="btn">Napisz do nas</a>
-        </section>
-    </main>
+          </div>
+          <a href="gate_sim.html" class="inline-flex items-center gap-1 font-mono text-xs text-cyan-400 hover:text-cyan-300 font-bold">
+            OTWÓRZ_SYMULATOR &rarr;
+          </a>
+        </div>
 
-    <footer>
-        <p>&copy;2025 Koło Naukowe Informatyków - UPP | Wszelkie prawa zastrzeżone</p>
+        <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between group">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-purple-950/70 border border-purple-500/30 text-purple-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/></svg>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Neural TTS Lab</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+              Dedykowany vocoder i moduł syntezy głosu Web Speech API z dynamicznym wizualizatorem oscyloskopowym, wsparciem języków obcych oraz kontrolą modulacji prędkości.
+            </p>
+          </div>
+          <a href="tts.html" class="inline-flex items-center gap-1 font-mono text-xs text-purple-400 hover:text-purple-300 font-bold">
+            URUCHOM_TTS_LAB &rarr;
+          </a>
+        </div>
+
+        <div class="glass-panel p-6 rounded-2xl flex flex-col justify-between group">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-emerald-950/70 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Quiz Cyberbezpieczeństwa</h3>
+            <p class="text-slate-400 text-sm leading-relaxed mb-4">
+              Praktyczny test podatności na socjotechnikę opracowany przez członków KNI UPP na bazie oficjalnych raportów KNF z analizą realnych wektorów ataku.
+            </p>
+          </div>
+          <a href="https://kniupp.pl/phishing_quiz/" target="_blank" rel="noopener" class="inline-flex items-center gap-1 font-mono text-xs text-emerald-400 hover:text-emerald-300 font-bold">
+            ROZPOCZNIJ_TEST ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Latest Blog Entries -->
+    <section class="py-12 pb-24 px-4 max-w-6xl mx-auto border-t border-cyan-500/10">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <div class="font-mono text-xs text-cyan-400 mb-1">02 // TRANSMISJE</div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Najnowsze Raporty</h2>
+        </div>
+        <a href="blog/index.html" class="text-xs font-mono text-cyan-400 hover:text-cyan-300">WSZYSTKIE_WPISY &rarr;</a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <a href="blog/pfnis.html" class="glass-panel p-6 rounded-2xl block group">
+          <div class="text-[11px] font-mono text-cyan-400 mb-2">FESTIWAL // EDUKACJA</div>
+          <h3 class="text-lg font-bold text-white group-hover:text-cyan-300 transition-colors">Poznański Festiwal Nauki i Sztuki</h3>
+          <p class="text-xs text-slate-400 mt-2">Sprawdź, jak nasz quiz cyberbezpieczeństwa edukował gości tegorocznej edycji.</p>
+        </a>
+
+        <a href="blog/juwenalia_2025.html" class="glass-panel p-6 rounded-2xl block group">
+          <div class="text-[11px] font-mono text-purple-400 mb-2">HARDWARE // ARDUINO</div>
+          <h3 class="text-lg font-bold text-white group-hover:text-purple-300 transition-colors">Pochód Juwenaliowy UPP 2025</h3>
+          <p class="text-xs text-slate-400 mt-2">Projekt i wdrożenie serwomechanizmu głowy robota Terminator na platformę Juwenaliową.</p>
+        </a>
+
+        <a href="blog/hackaton2025.html" class="glass-panel p-6 rounded-2xl block group">
+          <div class="text-[11px] font-mono text-emerald-400 mb-2">HACKATHON // QUANTUM</div>
+          <h3 class="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors">QL Future Hackathon 2025</h3>
+          <p class="text-xs text-slate-400 mt-2">Dwa zespoły KNI na maratonie algorytmów kwantowych oraz nagroda za synergię zespołową.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-cyan-500/20 bg-cyber-darker text-slate-500 font-mono text-xs py-8 px-4">
+      <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <div>
+          <span class="text-slate-300 font-bold">KNI UPP</span> // Koło Naukowe Informatyków Uniwersytetu Przyrodniczego w Poznaniu.
+          <p class="text-[11px] text-slate-600 mt-0.5">&copy; 2026 Wszystkie prawa zastrzeżone.</p>
+        </div>
+        <div class="flex items-center gap-4 text-slate-400">
+          <a href="about.html" class="hover:text-cyan-400 transition-colors">O_NAS</a>
+          <a href="gate_sim.html" class="hover:text-cyan-400 transition-colors">SYMULATOR</a>
+          <a href="tts.html" class="hover:text-cyan-400 transition-colors">TTS_LAB</a>
+          <a href="contact.html" class="hover:text-cyan-400 transition-colors">KONTAKT</a>
+        </div>
+      </div>
     </footer>
-    <!-- zmieniony skrypt na assets/js/script.js -->
-    <script src="assets/js/script.js"></script>
-    <!-- Powiększane zdjęcie w modalu -->
-    <div id="img-modal"
-        style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); align-items:center; justify-content:center;">
-        <img id="modal-img" src="" alt="Powiększone zdjęcie"
-            style="max-width:90vw; max-height:90vh; border-radius:12px; box-shadow:0 4px 24px rgba(0,0,0,0.5);" />
-    </div>
-</body>
+  </div>
 
+  
+<script src="assets/js/config.js"></script>
+  <script src="assets/js/script.js"></script>
+</body>
 </html>

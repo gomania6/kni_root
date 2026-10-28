@@ -1,90 +1,188 @@
 <!DOCTYPE html>
-<html lang="pl">
-
+<html lang="pl" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text-to-Speech – Koło Naukowe Informatyków UPP</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" href="static/favicon.png" type="image/x-icon">
-    <meta name="theme-color" content="#0f1724">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TTS Lab // KNI UPP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              bg: '#050713',
+              darker: '#02040a',
+              card: 'rgba(11, 17, 33, 0.75)',
+              border: 'rgba(0, 240, 255, 0.2)',
+              cyan: '#00f0ff',
+              purple: '#8b5cf6',
+              emerald: '#10b981'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'Courier New', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    ::selection { background: #8b5cf6; color: #050713; }
+    .text-glow { text-shadow: 0 0 12px rgba(139, 92, 246, 0.6); }
+    .glass-panel {
+      background: rgba(10, 16, 32, 0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-panel:hover {
+      border-color: rgba(139, 92, 246, 0.5);
+      box-shadow: 0 10px 30px -10px rgba(139, 92, 246, 0.2);
+    }
+  </style>
 </head>
+<body class="bg-cyber-bg text-slate-200 font-sans min-h-screen relative overflow-x-hidden selection:bg-purple-500 selection:text-white flex flex-col justify-between">
 
-<body>
-    <header>
-        <div class="container header-inner">
-            <a href="index.html" class="brand">
-                <img src="static/favicon.png" alt="KNI UPP" class="logo" />
-                Koło Naukowe Informatyków UPP
-            </a>
+  <div class="relative z-20 flex flex-col min-h-screen">
 
-            <nav class="nav" aria-label="Główne menu">
-                <button class="nav-toggle" aria-label="Otwórz menu" aria-expanded="false">
-                    <span class="hamburger" aria-hidden="true"></span>
-                </button>
-                <ul class="nav-list">
-                    <li><a href="index.html">Strona główna</a></li>
-                    <li><a href="about.html">O nas</a></li>
-                    <li><a href="blog/index.html">Blog</a></li>
-                    <li><a href="contact.html">Kontakt</a></li>
-                </ul>
-            </nav>
+    <!-- Header -->
+    <header class="sticky top-0 z-50 glass-panel border-x-0 border-t-0 border-b border-cyan-500/20 px-3 sm:px-6 lg:px-8 py-3">
+      <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
+        <a href="index.html" class="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0">
+          <div class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-slate-900 border border-cyan-400/50 flex items-center justify-center p-1.5 shadow-[0_0_15px_rgba(0,240,255,0.3)] group-hover:border-cyan-300 transition-colors">
+            <svg class="w-full h-full text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2" />
+              <polyline points="2 17 12 22 22 17" />
+              <polyline points="2 12 12 17 22 12" />
+            </svg>
+            <div class="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-purple-500 rounded-full animate-pulse"></div>
+          </div>
+          <div>
+            <span class="font-extrabold text-base sm:text-lg tracking-wider text-white flex items-center gap-1.5">
+              KNI <span class="text-cyan-400 text-glow">UPP</span>
+            </span>
+            <span class="block text-[9px] sm:text-[10px] font-mono tracking-widest text-slate-400 uppercase -mt-0.5">
+              Koło Naukowe
+            </span>
+          </div>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-1 font-mono text-xs lg:text-sm">
+          <a href="index.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">01. GŁÓWNA</a>
+          <a href="about.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">02. O_NAS</a>
+          <a href="gate_sim.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">03. SYMULATOR</a>
+          <a href="tts.html" class="px-3.5 py-1.5 rounded-md text-cyan-400 bg-cyan-950/40 border border-cyan-500/30">04. TTS_LAB</a>
+          <a href="blog/index.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">05. BLOG</a>
+          <a href="contact.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">06. KONTAKT</a>
+        </nav>
+
+        <!-- Right Side CTA + Mobile Hamburger -->
+        <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <a href="contact.html" class="relative group overflow-hidden rounded-md p-px font-mono text-xs font-semibold whitespace-nowrap flex-shrink-0">
+            <span class="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-cyan-500 animate-pulse"></span>
+            <span class="relative block px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-[5px] bg-slate-950 transition-all duration-300 group-hover:bg-opacity-0 text-white text-[11px] sm:text-xs">
+              <span class="sm:hidden">[ DOŁĄCZ ]</span>
+              <span class="hidden sm:inline">[ DOŁĄCZ_DO_NAS ]</span>
+            </span>
+          </a>
+
+          <!-- Hamburger Button with Animated Bars -->
+          <button id="mobileMenuBtn" aria-label="Przełącz menu" class="md:hidden text-slate-300 hover:text-cyan-400 p-2 rounded-lg bg-slate-900/60 border border-cyan-500/30 focus:outline-none transition-colors">
+            <svg id="hamburgerIcon" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+            <svg id="closeIcon" class="w-5 h-5 hidden transition-transform duration-300 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
+      </div>
+
+      <!-- Animated Semi-Transparent Mobile Nav Menu -->
+      <div id="mobileNav" class="md:hidden transition-all duration-300 ease-in-out max-h-0 opacity-0 overflow-hidden">
+        <div class="pt-3 pb-2 mt-3 font-mono text-xs sm:text-sm space-y-1.5 border-t border-cyan-500/20 bg-cyber-darker/90 backdrop-blur-xl p-3 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] border border-cyan-500/25">
+          <a href="index.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">01. GŁÓWNA</a>
+        <a href="about.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">02. O_NAS</a>
+        <a href="gate_sim.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">03. SYMULATOR</a>
+        <a href="tts.html" class="block px-3.5 py-2.5 rounded-lg text-cyan-300 bg-cyan-950/60 border border-cyan-500/40 font-semibold">04. TTS_LAB</a>
+        <a href="blog/index.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">05. BLOG</a>
+        <a href="contact.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">06. KONTAKT</a>
+        </div>
+      </div>
     </header>
 
-    <main class="container" style="padding-top:1.5rem;">
-        <section class="card reveal">
-            <h1>Text-to-Speech</h1>
-            <p class="muted">Wprowadź tekst poniżej, wybierz język i uruchom przetwarzanie na mowę.</p>
+    <main class="max-w-4xl mx-auto px-4 py-16 w-full space-y-6 flex-1">
+      <div>
+        <div class="text-xs font-mono text-purple-400 mb-1">&gt; SYNTEZA_AKUSTYCZNA</div>
+        <h1 class="text-3xl sm:text-4xl font-black text-white">TEXT-TO-SPEECH LAB</h1>
+        <p class="text-slate-400 text-sm mt-2">Wprowadź tekst poniżej, wybierz język oraz tempo i zainicjuj przetwarzanie na mowę w czasie rzeczywistym.</p>
+      </div>
 
-            <form id="tts-form" style="margin-top:1rem;">
-                <label for="text-input">Tekst</label>
-                <textarea id="text-input" name="text" rows="8" placeholder="Wpisz tekst tutaj..." required
-                    style="width:100%; font-size:1.05rem; padding:0.85rem; border-radius:8px; border:1px solid #e6eefb;"></textarea>
+      <div class="glass-panel p-6 sm:p-8 rounded-2xl border-purple-500/30">
+        <form id="tts-form" class="space-y-4 font-mono text-xs">
+          <div>
+            <label for="text-input" class="block text-slate-400 mb-2 uppercase tracking-wider">&gt; STRUMIEŃ_DANYCH_TEKSTOWYCH:</label>
+            <textarea id="text-input" name="text" rows="7" required placeholder="Wpisz tekst tutaj..." class="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-4 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-purple-400 transition-colors font-mono"></textarea>
+          </div>
 
-                <div style="display:flex;gap:0.75rem;margin-top:0.75rem;flex-wrap:wrap;">
-                    <div style="flex:1;min-width:160px;">
-                        <label for="lang-select">Język</label>
-                        <select id="lang-select" name="lang" required
-                            style="width:100%; padding:0.5rem; border-radius:6px; border:1px solid #e6eefb;">
-                            <option value="pl">Polski (pl)</option>
-                            <option value="en" selected>Angielski (en)</option>
-                            <option value="de">Niemiecki (de)</option>
-                        </select>
-                    </div>
-
-                    <div style="display:flex;align-items:center;gap:0.5rem;">
-                        <label for="slow-input" style="display:flex;align-items:center;gap:0.5rem;">
-                            <input type="checkbox" id="slow-input" name="slow">
-                            Wolne mówienie
-                        </label>
-                    </div>
-                </div>
-
-                <div style="margin-top:1rem;display:flex;gap:0.6rem;flex-wrap:wrap;">
-                    <button type="submit" id="submit-btn" class="btn">Przetwórz na mowę</button>
-                    <button type="button" id="stop-btn" class="btn" style="background:#ef4444">Zatrzymaj</button>
-                    <button type="button" id="clear-btn" class="btn btn-secondary">Wyczyść</button>
-                </div>
-            </form>
-
-            <div id="progress-container" style="margin-top:1rem; display:none;">
-                <div id="progress-bar" style="width:100%; background:#e6eefb; border-radius:999px; height:14px; overflow:hidden;">
-                    <div id="progress-inner" style="height:100%; width:0%; background:linear-gradient(90deg,#2546ff,#06b6d4); transition:width 300ms;"></div>
-                </div>
-                <div id="progress-text" class="muted" style="margin-top:0.5rem; font-size:0.95rem;">Trwa odtwarzanie…</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+            <div>
+              <label for="lang-select" class="block text-slate-400 mb-1">&gt; JĘZYK_MODELU:</label>
+              <select id="lang-select" name="lang" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-slate-200 focus:border-purple-400 outline-none">
+                <option value="pl">Polski (pl-PL)</option>
+                <option value="en" selected>Angielski (en-US)</option>
+                <option value="de">Niemiecki (de-DE)</option>
+              </select>
             </div>
 
-            <div id="result" style="margin-top:1rem;"></div>
-        </section>
+            <div class="pt-5">
+              <label for="slow-input" class="flex items-center gap-3 cursor-pointer p-3 rounded-lg bg-slate-950 border border-slate-800">
+                <input type="checkbox" id="slow-input" name="slow" class="w-4 h-4 accent-purple-500 rounded">
+                <span class="text-slate-300">Wolne tempo mówienia (-15%)</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3 pt-3">
+            <button type="submit" id="submit-btn" class="px-6 py-3 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold transition-all shadow-[0_0_20px_rgba(139,92,246,0.4)] flex items-center gap-2">
+              PRZETWÓRZ_NA_MOWĘ 🔊
+            </button>
+            <button type="button" id="stop-btn" class="px-5 py-3 rounded-lg bg-red-600/80 hover:bg-red-500 text-white font-bold transition-all">
+              ZATRZYMAJ ⏹
+            </button>
+            <button type="button" id="clear-btn" class="px-5 py-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold transition-all ml-auto">
+              WYCZYŚĆ
+            </button>
+          </div>
+        </form>
+
+        <div id="progress-container" class="mt-6 pt-4 border-t border-slate-800" style="display:none;">
+          <div class="w-full bg-slate-950 border border-slate-800 rounded-full h-2.5 overflow-hidden">
+            <div id="progress-inner" class="h-full w-0 bg-gradient-to-r from-purple-500 to-cyan-400 transition-all duration-300"></div>
+          </div>
+          <div id="progress-text" class="text-xs font-mono text-purple-400 mt-2">Trwa synteza audio...</div>
+        </div>
+
+        <div id="result" class="mt-4 font-mono text-xs text-emerald-400"></div>
+      </div>
     </main>
 
-    <footer>
-        <p>&copy;2025 Koło Naukowe Informatyków - UPP | Wszelkie prawa zastrzeżone</p>
+    <!-- Footer -->
+    <footer class="border-t border-purple-500/20 bg-cyber-darker text-slate-500 font-mono text-xs py-8 px-4 text-center">
+      &copy; 2026 Koło Naukowe Informatyków — UPP | Wszelkie prawa zastrzeżone
     </footer>
+  </div>
 
-    <script src="assets/js/script.js"></script>
-    <script src="tts.js"></script>
+  <script src="tts.js"></script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/script.js"></script>
 </body>
 </html>

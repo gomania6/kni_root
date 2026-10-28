@@ -1,59 +1,221 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O nas – Koło Naukowe Informatyków UPP</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" href="static/favicon.png" type="image/x-icon">
-    <meta name="theme-color" content="#0f1724">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>O nas // KNI UPP</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              bg: '#050713',
+              darker: '#02040a',
+              card: 'rgba(11, 17, 33, 0.75)',
+              border: 'rgba(0, 240, 255, 0.2)',
+              cyan: '#00f0ff',
+              purple: '#8b5cf6',
+              emerald: '#10b981'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'Courier New', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    ::selection { background: #00f0ff; color: #050713; }
+    .text-glow { text-shadow: 0 0 12px rgba(0, 240, 255, 0.6); }
+    .glass-panel {
+      background: rgba(10, 16, 32, 0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(0, 240, 255, 0.15);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-panel:hover {
+      border-color: rgba(0, 240, 255, 0.45);
+      box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.2);
+    }
+    .scanline-overlay {
+      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.3));
+      background-size: 100% 4px;
+      pointer-events: none;
+    }
+  </style>
 </head>
-<body>
-    <header>
-      <div class="container header-inner">
-        <a href="index.html" class="brand">
-          <img src="static/favicon.png" alt="KNI UPP" class="logo" />
-          Koło Naukowe Informatyków UPP
+<body class="bg-cyber-bg text-slate-200 font-sans min-h-screen relative overflow-x-hidden selection:bg-cyan-400 selection:text-black flex flex-col justify-between">
+
+  <canvas id="cyberCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
+  <div class="fixed inset-0 scanline-overlay z-10 pointer-events-none opacity-40"></div>
+
+  <div class="relative z-20 flex flex-col min-h-screen">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 glass-panel border-x-0 border-t-0 border-b border-cyan-500/20 px-3 sm:px-6 lg:px-8 py-3">
+      <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
+        <a href="index.html" class="flex items-center gap-2.5 sm:gap-3 group flex-shrink-0">
+          <div class="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-slate-900 border border-cyan-400/50 flex items-center justify-center p-1.5 shadow-[0_0_15px_rgba(0,240,255,0.3)] group-hover:border-cyan-300 transition-colors">
+            <svg class="w-full h-full text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2" />
+              <polyline points="2 17 12 22 22 17" />
+              <polyline points="2 12 12 17 22 12" />
+            </svg>
+            <div class="absolute -bottom-1 -right-1 w-2.5 h-2.5 bg-purple-500 rounded-full animate-pulse"></div>
+          </div>
+          <div>
+            <span class="font-extrabold text-base sm:text-lg tracking-wider text-white flex items-center gap-1.5">
+              KNI <span class="text-cyan-400 text-glow">UPP</span>
+            </span>
+            <span class="block text-[9px] sm:text-[10px] font-mono tracking-widest text-slate-400 uppercase -mt-0.5">
+              Koło Naukowe
+            </span>
+          </div>
         </a>
-        <nav class="nav" aria-label="Główne menu">
-          <button class="nav-toggle" aria-label="Otwórz menu" aria-expanded="false"><span class="hamburger" aria-hidden="true"></span></button>
-          <ul class="nav-list">
-            <li><a href="index.html">Strona główna</a></li>
-            <li><a href="about.html" class="active">O nas</a></li>
-            <li><a href="blog/index.html">Blog</a></li>
-            <li><a href="contact.html">Kontakt</a></li>
-          </ul>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-1 font-mono text-xs lg:text-sm">
+          <a href="index.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">01. GŁÓWNA</a>
+          <a href="about.html" class="px-3.5 py-1.5 rounded-md text-cyan-400 bg-cyan-950/40 border border-cyan-500/30">02. O_NAS</a>
+          <a href="gate_sim.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">03. SYMULATOR</a>
+          <a href="tts.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">04. TTS_LAB</a>
+          <a href="blog/index.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">05. BLOG</a>
+          <a href="contact.html" class="px-3.5 py-1.5 rounded-md text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/30 transition-all border border-transparent hover:border-cyan-500/30">06. KONTAKT</a>
         </nav>
+
+        <!-- Right Side CTA + Mobile Hamburger -->
+        <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <a href="contact.html" class="relative group overflow-hidden rounded-md p-px font-mono text-xs font-semibold whitespace-nowrap flex-shrink-0">
+            <span class="absolute inset-0 bg-gradient-to-r from-cyan-500 via-purple-500 to-cyan-500 animate-pulse"></span>
+            <span class="relative block px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-[5px] bg-slate-950 transition-all duration-300 group-hover:bg-opacity-0 text-white text-[11px] sm:text-xs">
+              <span class="sm:hidden">[ DOŁĄCZ ]</span>
+              <span class="hidden sm:inline">[ DOŁĄCZ_DO_NAS ]</span>
+            </span>
+          </a>
+
+          <!-- Hamburger Button with Animated Bars -->
+          <button id="mobileMenuBtn" aria-label="Przełącz menu" class="md:hidden text-slate-300 hover:text-cyan-400 p-2 rounded-lg bg-slate-900/60 border border-cyan-500/30 focus:outline-none transition-colors">
+            <svg id="hamburgerIcon" class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+            <svg id="closeIcon" class="w-5 h-5 hidden transition-transform duration-300 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Animated Semi-Transparent Mobile Nav Menu -->
+      <div id="mobileNav" class="md:hidden transition-all duration-300 ease-in-out max-h-0 opacity-0 overflow-hidden">
+        <div class="pt-3 pb-2 mt-3 font-mono text-xs sm:text-sm space-y-1.5 border-t border-cyan-500/20 bg-cyber-darker/90 backdrop-blur-xl p-3 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] border border-cyan-500/25">
+          <a href="index.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">01. GŁÓWNA</a>
+        <a href="about.html" class="block px-3.5 py-2.5 rounded-lg text-cyan-300 bg-cyan-950/60 border border-cyan-500/40 font-semibold">02. O_NAS</a>
+        <a href="gate_sim.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">03. SYMULATOR</a>
+        <a href="tts.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">04. TTS_LAB</a>
+        <a href="blog/index.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">05. BLOG</a>
+        <a href="contact.html" class="block px-3.5 py-2.5 rounded-lg text-slate-300 hover:text-cyan-400 hover:bg-cyan-950/40 transition-colors">06. KONTAKT</a>
+        </div>
       </div>
     </header>
 
-    <main>
-        <section>
-            <h2>Kim jesteśmy?</h2>
-            <p>Koło Naukowe Informatyków UPP to grupa studentów, których łączy pasja do technologii, programowania, elektroniki i rozwiązywania problemów. Naszą misją jest rozwój umiejętności praktycznych poprzez projekty, warsztaty oraz udział w wydarzeniach naukowych.</p>
-        </section>
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-16 w-full space-y-8 flex-1">
+      <div>
+        <div class="text-xs font-mono text-cyan-400 mb-1">&gt; IDENTYFIKACJA_I_MISJA</div>
+        <h1 class="text-3xl sm:text-4xl font-black text-white">KIM JESTEŚMY?</h1>
+      </div>
 
-        <section>
-            <h2>Nasze działania</h2>
-            <ul>
-                <li>Organizacja warsztatów i szkoleń dla studentów.</li>
-                <li>Tworzenie własnych projektów – od oprogramowania po elektronikę.</li>
-                <li>Udział w konferencjach, hackathonach i konkursach.</li>
-                <li>Współpraca z innymi kołami naukowymi oraz firmami IT.</li>
-            </ul>
-        </section>
+      <div class="glass-panel p-6 sm:p-8 rounded-2xl border-cyan-500/30">
+        <p class="text-slate-300 text-base leading-relaxed">
+          Koło Naukowe Informatyków UPP to grupa studentów Uniwersytetu Przyrodniczego w Poznaniu, których łączy pasja do technologii, programowania, elektroniki i rozwiązywania problemów inżynierskich. Naszą misją jest rozwój umiejętności praktycznych poprzez projekty open-source, warsztaty oraz udział w wydarzeniach naukowych i branżowych.
+        </p>
+      </div>
 
-        <section>
-            <h2>Dlaczego warto do nas dołączyć?</h2>
-            <p>Dołączając do nas, zyskujesz możliwość pracy nad realnymi projektami, rozwijania portfolio, zdobywania doświadczenia zespołowego i poznawania ludzi o podobnych zainteresowaniach. Niezależnie od poziomu wiedzy – każdy znajdzie tu coś dla siebie!</p>
-        </section>
+      <div class="glass-panel p-6 sm:p-8 rounded-2xl border-purple-500/30">
+        <div class="text-xs font-mono text-purple-400 mb-2">&gt; WEKTORY_DZIAŁANIA</div>
+        <h2 class="text-xl font-bold text-white mb-4">Nasze działania</h2>
+        <ul class="space-y-3 font-mono text-sm text-slate-300">
+          <li class="flex items-start gap-3">
+            <span class="text-cyan-400 font-bold">01.</span>
+            <span>Organizacja warsztatów technologicznych i szkoleń z programowania dla studentów.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-cyan-400 font-bold">02.</span>
+            <span>Tworzenie własnych projektów – od oprogramowania webowego po elektronikę i IoT (Arduino, ESP32).</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-cyan-400 font-bold">03.</span>
+            <span>Udział w konferencjach naukowych, hackathonach i konkursach technologicznych.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-cyan-400 font-bold">04.</span>
+            <span>Współpraca z innymi kołami naukowymi oraz firmami z sektora IT.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="glass-panel p-6 sm:p-8 rounded-2xl border-emerald-500/30">
+        <div class="text-xs font-mono text-emerald-400 mb-2">&gt; REKRUTACJA_OTWARTA</div>
+        <h2 class="text-xl font-bold text-white mb-3">Dlaczego warto do nas dołączyć?</h2>
+        <p class="text-slate-300 text-sm leading-relaxed mb-6">
+          Dołączając do nas, zyskujesz możliwość pracy nad realnymi projektami, rozwijania portfolio, zdobywania doświadczenia zespołowego i poznawania ludzi o podobnych zainteresowaniach. Niezależnie od poziomu wiedzy – każdy znajdzie tu pole do rozwoju!
+        </p>
+        <a href="contact.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-mono text-xs font-bold tracking-wider transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+          APLIKUJ_DO_KOŁA &rarr;
+        </a>
+      </div>
     </main>
 
-    <footer>
-        <p>&copy;2025 Koło Naukowe Informatyków - UPP | Wszelkie prawa zastrzeżone</p>
+    <!-- Footer -->
+    <footer class="border-t border-cyan-500/20 bg-cyber-darker text-slate-500 font-mono text-xs py-8 px-4 text-center">
+      &copy; 2026 Koło Naukowe Informatyków — UPP | Wszelkie prawa zastrzeżone
     </footer>
+  </div>
 
-    <script src="assets/js/script.js"></script>
+  <script>
+    const canvas = document.getElementById('cyberCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, particles = [];
+    function init() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      particles = [];
+      for (let i = 0; i < 40; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          color: Math.random() > 0.4 ? '#00f0ff' : '#8b5cf6'
+        });
+      }
+    }
+    window.addEventListener('resize', init);
+    function anim() {
+      ctx.clearRect(0,0,width,height);
+      for(let p of particles){
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0||p.x>width) p.vx*=-1;
+        if(p.y<0||p.y>height) p.vy*=-1;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,1.5,0,Math.PI*2);
+        ctx.fillStyle=p.color;
+        ctx.fill();
+      }
+      requestAnimationFrame(anim);
+    }
+    init(); anim();
+  </script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/script.js"></script>
 </body>
 </html>
